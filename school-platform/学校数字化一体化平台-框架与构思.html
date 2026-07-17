@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学校数字化一体化平台 · 框架与构思</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap');
+
+:root{
+  --bg:#F5F6F3;
+  --surface:#FFFFFF;
+  --ink:#17221C;
+  --ink-soft:#4B564E;
+  --muted:#8A938B;
+  --border:#E3E6E0;
+  --brand:#1E6B50;
+  --brand-dark:#154E3A;
+  --brand-tint:#E8F4ED;
+  --brand-tint-2:#D9EDE2;
+  --blue:#2E5BD6;
+  --blue-dark:#1F3F9C;
+  --blue-tint:#EAEFFC;
+  --blue-tint-2:#DCE5FA;
+  --gold:#B3812B;
+  --gold-tint:#F8EEDC;
+  --radius-lg:18px;
+  --radius-md:12px;
+  --radius-sm:8px;
+  --shadow:0 1px 2px rgba(23,34,28,0.04), 0 10px 28px rgba(23,34,28,0.07);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1180px;margin:0 auto;padding:36px 24px 64px;}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:linear-gradient(135deg,var(--brand-dark) 0%, var(--brand) 62%, #2C8164 100%);
+  border-radius:var(--radius-lg);
+  padding:40px 40px 36px;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:40px;
+}
+.hero::after{
+  content:"";
+  position:absolute; right:-60px; top:-60px;
+  width:260px;height:260px;border-radius:50%;
+  background:rgba(255,255,255,0.06);
+}
+.hero-eyebrow{
+  font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+  color:rgba(255,255,255,0.72); font-weight:600; margin-bottom:14px;
+}
+.hero h1{
+  font-size:26px; font-weight:700; margin:0 0 16px; max-width:760px;
+}
+.hero p{
+  font-size:15px; color:rgba(255,255,255,0.88); margin:0; max-width:680px;
+}
+.hero-tags{display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;}
+.hero-tag{
+  font-size:12.5px; padding:6px 12px; border-radius:999px;
+  background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.22);
+  color:#fff;
+}
+
+/* ---------- Section shells ---------- */
+.section{margin-bottom:48px;}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:8px;}
+.section-head h2{font-size:19px; font-weight:700; margin:0; color:var(--ink);}
+.section-head .section-sub{font-size:13px; color:var(--muted);}
+
+/* ---------- Framework layers ---------- */
+.layer-stack{display:flex; flex-direction:column; gap:10px;}
+.layer-row{
+  display:grid; grid-template-columns:200px 1fr;
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.layer-label{
+  display:flex; align-items:center; gap:14px; padding:18px 18px;
+  border-right:1px solid var(--border);
+}
+.layer-num{font-size:24px; font-weight:900; font-variant-numeric:tabular-nums; opacity:.85;}
+.layer-name{font-size:14.5px; font-weight:700; line-height:1.35;}
+.layer-desc{font-size:11.5px; color:var(--muted); margin-top:2px;}
+.layer-chips{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:16px 18px;}
+.chip{
+  font-size:12.5px; padding:6px 12px; border-radius:999px; white-space:nowrap;
+  border:1px solid transparent; font-weight:500;
+}
+
+.layer-row.l1 .layer-num,.layer-row.l1 .layer-name{color:var(--brand-dark);}
+.layer-row.l1 .layer-label{background:var(--brand-tint-2);}
+.layer-row.l1 .chip{background:var(--brand-tint); color:var(--brand-dark); border-color:#CFE7DA;}
+
+.layer-row.l2 .layer-num,.layer-row.l2 .layer-name{color:var(--brand);}
+.layer-row.l2 .layer-label{background:var(--brand-tint);}
+.layer-row.l2 .chip{background:#F1F8F4; color:var(--brand-dark); border-color:#DCEFE2;}
+
+.layer-row.l3 .layer-num,.layer-row.l3 .layer-name{color:var(--blue-dark);}
+.layer-row.l3 .layer-label{background:var(--blue-tint-2);}
+.layer-row.l3 .chip{background:var(--blue-tint); color:var(--blue-dark); border-color:#D3DEF7;}
+
+.layer-row.l4 .layer-num,.layer-row.l4 .layer-name{color:var(--blue-dark);}
+.layer-row.l4 .layer-label{background:#F0F3FC;}
+.layer-row.l4 .chip{background:#F4F6FD; color:var(--blue-dark); border-color:#DFE5F8;}
+
+.layer-row.l5 .layer-num,.layer-row.l5 .layer-name{color:#7A5A1E;}
+.layer-row.l5 .layer-label{background:var(--gold-tint);}
+.layer-row.l5 .chip{background:#FBF4E5; color:#7A5A1E; border-color:#EBD7A8;}
+
+/* ---------- Function grid ---------- */
+.function-grid{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:14px;
+}
+.fn-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md);
+  padding:18px 16px; box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.fn-card:hover{transform:translateY(-2px); box-shadow:0 4px 8px rgba(23,34,28,0.06), 0 16px 32px rgba(23,34,28,0.09);}
+.fn-icon{
+  width:38px; height:38px; border-radius:10px; background:var(--brand-tint);
+  display:flex; align-items:center; justify-content:center; margin-bottom:12px;
+}
+.fn-icon svg{width:20px; height:20px; stroke:var(--brand-dark); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+.fn-title{font-size:14px; font-weight:700; margin:0 0 6px; color:var(--ink);}
+.fn-desc{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+/* ---------- Dashboard demo ---------- */
+.demo-shell{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.school-bar{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding:18px 24px; background:#FAFBF9; border-bottom:1px solid var(--border);
+}
+.school-id{display:flex; align-items:center; gap:12px;}
+.school-mark{
+  width:38px; height:38px; border-radius:10px; background:var(--brand);
+  color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;
+}
+.school-name{font-size:15px; font-weight:700;}
+.school-meta{font-size:12px; color:var(--muted);}
+.school-stats{display:flex; gap:10px; flex-wrap:wrap;}
+.stat-pill{
+  font-size:12px; padding:5px 11px; border-radius:999px; background:var(--blue-tint); color:var(--blue-dark); font-weight:600;
+}
+
+.role-tabs{display:flex; gap:8px; padding:16px 24px 0; flex-wrap:wrap;}
+.db-tab{
+  display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px;
+  border:1px solid var(--border); background:#fff; cursor:pointer; font-size:13.5px; font-weight:600; color:var(--ink-soft);
+  transition:all .12s ease;
+}
+.db-tab .role-badge{
+  width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; color:#fff;
+}
+.db-tab[data-role="principal"] .role-badge{background:var(--brand);}
+.db-tab[data-role="middle"] .role-badge{background:#2F8C7A;}
+.db-tab[data-role="teacher"] .role-badge{background:var(--blue);}
+.db-tab[data-role="admin"] .role-badge{background:var(--gold);}
+.db-tab.active{border-color:transparent; color:#fff;}
+.db-tab[data-role="principal"].active{background:var(--brand);}
+.db-tab[data-role="middle"].active{background:#2F8C7A;}
+.db-tab[data-role="teacher"].active{background:var(--blue);}
+.db-tab[data-role="admin"].active{background:var(--gold);}
+.db-tab:not(.active):hover{border-color:#C9D1C7;}
+
+.db-panel{display:none; padding:22px 24px 26px;}
+.db-panel.active{display:block;}
+.panel-hint{font-size:12px; color:var(--muted); margin:0 0 16px;}
+.widget-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.widget{
+  border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 16px; background:#FCFDFC;
+}
+.widget h4{font-size:13.5px; font-weight:700; margin:0 0 12px; display:flex; align-items:center; gap:6px;}
+.widget h4 .dot{width:6px;height:6px;border-radius:50%; background:var(--brand); display:inline-block;}
+
+.mini-stats{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.mini-stat b{display:block; font-size:17px; font-weight:800;}
+.mini-stat span{font-size:11.5px; color:var(--muted);}
+
+.prog-item{margin-bottom:11px;}
+.prog-item:last-child{margin-bottom:0;}
+.prog-top{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-bottom:5px;}
+.prog-bar{height:6px; border-radius:999px; background:#E9ECE7; overflow:hidden;}
+.prog-fill{height:100%; border-radius:999px; background:var(--brand);}
+
+.list-rows{display:flex; flex-direction:column; gap:9px;}
+.list-row{display:flex; justify-content:space-between; align-items:center; font-size:12.5px; gap:8px;}
+.list-row .l-label{color:var(--ink-soft);}
+.tag{font-size:11px; padding:3px 9px; border-radius:999px; font-weight:600; white-space:nowrap;}
+.tag.green{background:var(--brand-tint); color:var(--brand-dark);}
+.tag.blue{background:var(--blue-tint); color:var(--blue-dark);}
+.tag.gold{background:var(--gold-tint); color:#7A5A1E;}
+.tag.gray{background:#EEF0EC; color:var(--muted);}
+
+.ai-btn{
+  margin-top:10px; border:none; background:var(--brand); color:#fff; font-size:12.5px; font-weight:700;
+  padding:9px 14px; border-radius:8px; cursor:pointer;
+}
+.ai-btn:hover{background:var(--brand-dark);}
+.ai-box{display:none; margin-top:12px; background:var(--brand-tint); border-radius:8px; padding:12px 13px; font-size:12px; color:var(--brand-dark);}
+.ai-box.show{display:block;}
+.ai-box ul{margin:0; padding-left:16px;}
+.ai-box li{margin-bottom:6px;}
+
+.chip-row{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:10px;}
+.chip-row .chip{font-size:11.5px; padding:5px 10px; background:var(--blue-tint); color:var(--blue-dark); border-color:#D3DEF7;}
+.link-btn{font-size:12px; font-weight:700; color:var(--blue); cursor:pointer; background:none; border:none; padding:0;}
+
+footer{margin-top:36px; font-size:12px; color:var(--muted); text-align:center;}
+
+@media (max-width:880px){
+  .layer-row{grid-template-columns:1fr;}
+  .layer-label{border-right:none; border-bottom:1px solid var(--border);}
+  .function-grid{grid-template-columns:repeat(2,1fr);}
+  .widget-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <h1>学校数字化一体化平台 · 框架与构思</h1>
+    <p>以「学校主页」为统一入口，集成治理、教师发展、课程学习、活动报名、资源共享、项目服务、数据画像与 AI 助手的学校数字运营平台</p>
+  </div>
+
+  <!-- ============ 总体框架 ============ -->
+  <div class="section">
+    <div class="section-head">
+      <h2>一、总体框架</h2>
+      <div class="section-sub">五层结构 · 从学校入口到数据智能底座</div>
+    </div>
+
+    <div class="layer-stack">
+      <div class="layer-row l1">
+        <div class="layer-label">
+          <div class="layer-num">01</div>
+          <div>
+            <div class="layer-name">学校门户层</div>
+            <div class="layer-desc">学校专属主页 · 角色化入口</div>
+          </div>
+        </div>
+        <div class="layer-chips">
+          <span class="chip">专属主页</span>
+          <span class="chip">校长 / 中层 / 教师 / 管理员入口</span>
+          <span class="chip">校园要闻与校历</span>
+          <span class="chip">已购服务总览</span>
+          <span class="chip">项目进度展示</span>
+        </div>
+      </div>
+
+      <div class="layer-row l2">
+        <div class="layer-label">
+          <div class="layer-num">02</div>
+          <div>
+            <div class="layer-name">业务服务层</div>
+            <div class="layer-desc">学校能直接使用的业务能力</div>
+          </div>
+        </div>
+        <div class="layer-chips">
+          <span class="chip">课程学习</span>
+          <span class="chip">活动会议</span>
+          <span class="chip">教育服务</span>
+          <span class="chip">产品中心</span>
+          <span class="chip">策略工具</span>
+        </div>
+      </div>
+
+      <div class="layer-row l3">
+        <div class="layer-label">
+          <div class="layer-num">03</div>
+          <div>
+            <div class="layer-name">学校管理中台</div>
+            <div class="layer-desc">学校侧的管理与分发能力</div>
+          </div>
+        </div>
+        <div class="layer-chips">
+          <span class="chip">学校资料管理</span>
+          <span class="chip">用户与角色管理</span>
+          <span class="chip">内容发布</span>
+          <span class="chip">资源分发</span>
+          <span class="chip">服务跟踪</span>
+        </div>
+      </div>
+
+      <div class="layer-row l4">
+        <div class="layer-label">
+          <div class="layer-num">04</div>
+          <div>
+            <div class="layer-name">运营后台</div>
+            <div class="layer-desc">平台侧的统一运营与管理</div>
+          </div>
+        </div>
+        <div class="layer-chips">
+          <span class="chip">用户 / 学校 / 角色管理</span>
+          <span class="chip">内容管理</span>
+          <span class="chip">订单管理</span>
+          <span class="chip">交付管理</span>
+          <span class="chip">数据管理</span>
+          <span class="chip">消息管理</span>
+        </div>
+      </div>
+
+      <div class="layer-row l5">
+        <div class="layer-label">
+          <div class="layer-num">05</div>
+          <div>
+            <div class="layer-name">数据与智能层</div>
+            <div class="layer-desc">为以上四层提供贯穿支撑的数据底座</div>
+          </div>
+        </div>
+        <div class="layer-chips">
+          <span class="chip">学校画像</span>
+          <span class="chip">智能推荐</span>
+          <span class="chip">校级 AI 助手</span>
+          <span class="chip">数据沉淀</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 核心功能 ============ -->
+  <div class="section">
+    <div class="section-head">
+      <h2>二、核心功能</h2>
+      <div class="section-sub">10 项核心能力</div>
+    </div>
+    <div class="function-grid">
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9"/><path d="M9.5 20v-6h5v6"/></svg></div>
+        <p class="fn-title">学校专属主页</p>
+        <p class="fn-desc">聚合学校动态、活动、资源、培训和已购服务的统一入口</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></div>
+        <p class="fn-title">全员学习平台</p>
+        <p class="fn-desc">校长 / 中层 / 教师按角色学习，学校可统一购买并分发课程</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg></div>
+        <p class="fn-title">活动与报名系统</p>
+        <p class="fn-desc">会议、培训、跟岗、校内活动报名与日历展示</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4l2 2h8a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 17z"/></svg></div>
+        <p class="fn-title">资源共享空间</p>
+        <p class="fn-desc">沉淀制度、课例、活动资料，形成校内知识库</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16" rx="1.5"/><path d="M9 4.5V3h6v1.5"/><polyline points="8.5 12.5 11 15 16 9.5"/></svg></div>
+        <p class="fn-title">测评诊断系统</p>
+        <p class="fn-desc">用测评识别学校问题，推荐课程、服务、专家与改进方案</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="13" width="3" height="6"/><rect x="11" y="9" width="3" height="10"/><rect x="16" y="5" width="3" height="14"/></svg></div>
+        <p class="fn-title">服务进度看板</p>
+        <p class="fn-desc">查看已购服务、项目节点、交付材料与后续待办</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/><path d="M3.5 4h2l1.8 10.5h10.4L19.5 7H7"/></svg></div>
+        <p class="fn-title">订单与采购中心</p>
+        <p class="fn-desc">课程、产品、会议、服务统一下单、支付、开票、查单</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12 19 4"/><path d="M16 7l2 2"/><path d="M13.5 9.5l2 2"/></svg></div>
+        <p class="fn-title">校级权限分发</p>
+        <p class="fn-desc">学校管理员把课程、资源、服务分配给具体教师或角色</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="2" x2="12" y2="5.5"/></svg></div>
+        <p class="fn-title">智能推荐</p>
+        <p class="fn-desc">依据学校画像、测评结果、学习行为和服务历史推荐资源</p>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-icon"><svg viewBox="0 0 24 24"><path d="M12 3 13.6 9.4 20 11l-6.4 1.6L12 19l-1.6-6.4L4 11l6.4-1.6z"/></svg></div>
+        <p class="fn-title">学校 AI 助手</p>
+        <p class="fn-desc">基于学校资料、知识库、测评数据生成方案、建议与清单</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ Dashboard 原型 ============ -->
+  <div class="section">
+    <div class="section-head">
+      <h2>三、学校视角</h2>
+      <div class="section-sub">示意原型 · 同一入口，按角色呈现不同内容</div>
+    </div>
+
+    <div class="demo-shell">
+      <div class="school-bar">
+        <div class="school-id">
+          <div class="school-mark">校</div>
+          <div>
+            <div class="school-name">示例实验学校</div>
+            <div class="school-meta">学校主页 · 最近登录 今天 09:24</div>
+          </div>
+        </div>
+        <div class="school-stats">
+          <span class="stat-pill">发展阶段 · 成长期</span>
+          <span class="stat-pill">在校教师 86 人</span>
+          <span class="stat-pill">合作时长 2 年</span>
+        </div>
+      </div>
+
+      <div class="role-tabs">
+        <button class="db-tab active" data-role="principal" onclick="showRole('principal')">
+          <span class="role-badge">校</span>校长视图
+        </button>
+        <button class="db-tab" data-role="middle" onclick="showRole('middle')">
+          <span class="role-badge">中</span>中层管理者视图
+        </button>
+        <button class="db-tab" data-role="teacher" onclick="showRole('teacher')">
+          <span class="role-badge">师</span>教师视图
+        </button>
+        <button class="db-tab" data-role="admin" onclick="showRole('admin')">
+          <span class="role-badge">管</span>学校管理员视图
+        </button>
+      </div>
+
+      <!-- 校长视图 -->
+      <div class="db-panel active" id="panel-principal">
+        <p class="panel-hint">校长登录后，优先看到学校整体情况、进行中的项目，以及可一键调用的 AI 建议。</p>
+        <div class="widget-grid">
+          <div class="widget">
+            <h4><span class="dot"></span>学校发展概览</h4>
+            <div class="mini-stats">
+              <div class="mini-stat"><b>成长期</b><span>发展阶段</span></div>
+              <div class="mini-stat"><b>86 人</b><span>在校教师</span></div>
+              <div class="mini-stat"><b>1320 人</b><span>在读学生</span></div>
+              <div class="mini-stat"><b>2 年</b><span>合作时长</span></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>服务进度看板</h4>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">校本课程体系开发</span><span>65%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div>
+            </div>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">教师胜任力测评项目</span><span>100%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+            </div>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">智慧校园规划咨询</span><span>30%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>学校 AI 助手</h4>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 0;">基于学校画像、测评结果与已购服务，生成下学期发展建议</p>
+            <button class="ai-btn" onclick="toggleAdvice()">生成发展建议</button>
+            <div class="ai-box" id="ai-advice-box">
+              <ul>
+                <li>建议优先推进《智慧校园规划咨询》第二阶段验收</li>
+                <li>教师培训覆盖率已达 82%，建议为剩余 18% 教师匹配「课堂管理进阶」专题课程</li>
+                <li>测评显示教研协同维度低于同阶段学校均值，建议申请《教研组协同工作坊》服务</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 中层管理者视图 -->
+      <div class="db-panel" id="panel-middle">
+        <p class="panel-hint">中层管理者登录后，优先看到教研组进度、资源分发情况与待办事项。</p>
+        <div class="widget-grid">
+          <div class="widget">
+            <h4><span class="dot"></span>教研组发展进度</h4>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">语文教研组</span><span>88%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:88%"></div></div>
+            </div>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">数学教研组</span><span>95%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:95%"></div></div>
+            </div>
+            <div class="prog-item">
+              <div class="prog-top"><span class="l-label">英语教研组</span><span>70%</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:70%"></div></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>资源分发记录</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">班级管理进阶</span><span class="tag green">76 人已分配</span></div>
+              <div class="list-row"><span class="l-label">— 待确认</span><span class="tag gray">12 人</span></div>
+              <div class="list-row"><span class="l-label">信息化教学工具包</span><span class="tag green">40 人已分配</span></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>待办事项</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">审核 3 条教师培训报名申请</span><span class="tag gold">待处理</span></div>
+              <div class="list-row"><span class="l-label">确认跟岗学习名额（截止 6/30）</span><span class="tag gold">待处理</span></div>
+              <div class="list-row"><span class="l-label">收集教研组月度总结</span><span class="tag gray">进行中</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 教师视图 -->
+      <div class="db-panel" id="panel-teacher">
+        <p class="panel-hint">教师登录后，优先看到自己的学习任务、可报名的活动与常用资源入口。</p>
+        <div class="widget-grid">
+          <div class="widget">
+            <h4><span class="dot"></span>我的学习任务</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">班级管理进阶</span><span class="tag blue">3 / 8 课时</span></div>
+              <div class="list-row"><span class="l-label">学科专题培训 · 阅读教学</span><span class="tag green">已完成</span></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>近期活动</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">7/3 区域教学峰会</span><span class="tag green">已报名</span></div>
+              <div class="list-row"><span class="l-label">7/10 跟岗学习 · 示范校</span><span class="tag gold">剩 5 席</span></div>
+              <div class="list-row"><span class="l-label">7/15 校内教研日</span><span class="tag gray">日历展示</span></div>
+            </div>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>资源共享空间</h4>
+            <div class="chip-row">
+              <span class="chip">优秀课例</span>
+              <span class="chip">班级管理制度</span>
+              <span class="chip">活动方案模板</span>
+              <span class="chip">教师发展手册</span>
+            </div>
+            <button class="link-btn">进入知识库 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 学校管理员视图 -->
+      <div class="db-panel" id="panel-admin">
+        <p class="panel-hint">学校管理员登录后，优先看到用户与内容管理入口，以及已购服务的交付状态。</p>
+        <div class="widget-grid">
+          <div class="widget">
+            <h4><span class="dot"></span>用户与角色管理</h4>
+            <div class="mini-stats">
+              <div class="mini-stat"><b>86 个</b><span>教师账号</span></div>
+              <div class="mini-stat"><b>4 个</b><span>待激活</span></div>
+            </div>
+            <button class="link-btn" style="margin-top:10px;">管理用户 →</button>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>内容发布</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">6/20 期末教研安排通知</span><span class="tag gray">已发布</span></div>
+              <div class="list-row"><span class="l-label">6/15 暑期教师培训计划</span><span class="tag gray">已发布</span></div>
+            </div>
+            <button class="link-btn" style="margin-top:10px;">发布新内容 →</button>
+          </div>
+          <div class="widget">
+            <h4><span class="dot"></span>服务跟踪</h4>
+            <div class="list-rows">
+              <div class="list-row"><span class="l-label">校本课程体系开发</span><span class="tag blue">进行中</span></div>
+              <div class="list-row"><span class="l-label">教师胜任力测评项目</span><span class="tag green">已交付</span></div>
+              <div class="list-row"><span class="l-label">智慧校园规划咨询</span><span class="tag blue">进行中</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>原型示意 · 用于内部构思与方案沟通，数据均为示例，非真实学校数据</footer>
+
+</div>
+
+<script>
+function showRole(role){
+  document.querySelectorAll('.db-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelector('.db-tab[data-role="'+role+'"]').classList.add('active');
+  document.querySelectorAll('.db-panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('panel-'+role).classList.add('active');
+}
+function toggleAdvice(){
+  document.getElementById('ai-advice-box').classList.toggle('show');
+}
+</script>
+</body>
+</html>
